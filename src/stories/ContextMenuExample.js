@@ -8,7 +8,7 @@ export const ContextMenuExample = () => {
 	const [bindMenu, bindMenuItem, useContextTrigger, { data, coords, setVisible }] = useContextMenu();
 
 	const [bindTrigger] = useContextTrigger({
-        collect: () => 'Title'
+		collect: () => 'Title'
 	});
 
 	const [clickedCmd, setClickedCmd] = useState();
@@ -18,11 +18,19 @@ export const ContextMenuExample = () => {
 		<article>
 			<section>
 				<h2>Context menu sample</h2>
-                <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-
-					<button {...bindTrigger}>click me</button>
-					<button {...bindTrigger}>click me</button>
-                </div>
+				<div className= 'container'>
+					<div>
+						<button {...bindTrigger}>click me</button>
+						<button {...bindTrigger}>click me</button>
+					</div>
+					<div>
+						<button {...bindTrigger}>click me</button>
+					</div>
+					<div>
+						<button {...bindTrigger}>click me</button>
+						<button {...bindTrigger}>click me</button>
+					</div>
+				</div>
 				<div>
 					{clickedCmd && (
 						<p>

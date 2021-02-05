@@ -4,7 +4,7 @@ section {
   line-height: 24px;
   padding: 48px 20px;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 1000px;
   color: #333;
 }
 
@@ -66,4 +66,21 @@ li {
 
 .tip-wrapper svg path {
   fill: #1ea7fd;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px;
+}
+
+.container > div:first-child, .container > div:last-child  {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container > div  {
+  display: flex;
+  justify-content: space-around;
 }
