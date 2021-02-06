@@ -16,7 +16,9 @@ const baseStyles = {
 };
 
 const focusElement = (el) => el.focus();
+
 const useContextMenu = ({ rtl, handleElementSelect = focusElement } = {}) => {
+    console.log(`🚀 ~ file: useContextMenu.js ~ line 21 ~ useContextMenu ~ rtl, handleElementSelect`, rtl, handleElementSelect);
 	const menuRef = useRef();
 	const selectables = useRef([]);
 	const [style, setStyles] = useState(baseStyles);
@@ -115,7 +117,7 @@ const useContextMenu = ({ rtl, handleElementSelect = focusElement } = {}) => {
 		bindMenuItems,
 		buildUseContextMenuTrigger(triggerVisible, setCoords),
 		{
-			data: collectedData,
+            data: collectedData,
 			isVisible,
 			setVisible,
 			coords,

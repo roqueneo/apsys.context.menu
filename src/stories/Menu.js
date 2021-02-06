@@ -25,6 +25,9 @@ const Menu = (props) => {
 			<p {...bindMenuItem} onClick={handleMenuItemClick('second')}>
 				Second command
 			</p>
+			<p {...bindMenuItem} onClick={handleMenuItemClick('command')}>
+				 command
+			</p>
 			<hr />
 			<p {...bindMenuItem} onClick={handleMenuItemClick('third')}>
 				Third command

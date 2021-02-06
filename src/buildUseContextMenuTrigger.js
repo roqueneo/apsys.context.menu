@@ -5,6 +5,7 @@ const MOUSE_BUTTON = {
 	LEFT: 0,
 	RIGHT: 2
 };
+
 const defaultConfig = {
 	disable: false,
 	holdToDisplay: 1000,
