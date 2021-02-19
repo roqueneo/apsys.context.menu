@@ -4,14 +4,6 @@ import PropTypes from 'prop-types';
 const ContextMenuNumeric = props => {
 	const { bindMenu, data, bindMenuItem, coords, setClickedCmd, hideMenu, handleMenuItemClick } = props;
 
-	// const handleMenuItemClick = (n) => () => {
-	// 	setClickedCmd(n);
-    //     hideMenu();
-    //     if (n==='AdvancedFilters') {
-            
-    //         console.log(`🚀 ~ file: ContextMenuNumeric.js ~ line 11 ~ handleMenuItemClick ~ n`, n);
-    //     }
-	// };
     return (
         <div {...bindMenu}>
             <div {...bindMenuItem} onClick={handleMenuItemClick('Borrar')} >Borrar filtro</div>

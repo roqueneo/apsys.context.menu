@@ -1,61 +1,80 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import useContextMenu from '../useContextMenu';
 import './contextMenu.css';
 import ContextMenu from '../ContextMenu';
 
+const filtersConfig = {
+	'btn-1': {
+		elementId: 'btn-1',
+		filterType: 'TEXT',
+		filterName: 'Boton 1'
+	},
+	'btn-2': {
+		elementId: 'btn-2',
+		filterType: 'NUMBER',
+		filterName: 'Boton 2'
+	},
+	'btn-3': {
+		elementId: 'btn-3',
+		filterType: 'DATE',
+		filterName: 'Boton 3'
+	},
+	'btn-4': {
+		elementId: 'btn-4',
+		filterType: 'TEXT',
+	},
+	'btn-5': {
+		elementId: 'btn-5',
+		filterType: 'TEXT',
+		filterName: 'Boton 5'
+	}
+};
+
 export const ContextMenuExample = () => {
-	const [bindMenu, bindMenuItem, useContextTrigger, { data, coords, setVisible }] = useContextMenu();
+	const [contextMenuConfig, setContextMenuConfig] = useState({ elementId: '' });
 
-	const [bindTrigger] = useContextTrigger();
-	const [bindCustomTrigger] = useContextTrigger({
-        collect: () => 'CUSTOM'
-	});
-	const [bindNumberTrigger] = useContextTrigger({
-        collect: () => 'NUMBER'
-	});
-	const [bindDateTrigger] = useContextTrigger({
-        collect: () => 'DATE'
-	});
-	const [bindTextTrigger] = useContextTrigger({
-        collect: () => 'TEXT'
-	});
-
-	const [clickedCmd, setClickedCmd] = useState();
-	const hideMenu = () => setVisible(true);
+	const click = (event) => {
+		const { target } = event;
+		const contextId = target.getAttribute('context-id');
+		const config = filtersConfig[contextId];
+		setContextMenuConfig(config);
+	};
 
 	return (
 		<article>
 			<section>
 				<h2>Context menu sample</h2>
-				<div className= 'container'>
+				<div className="container">
 					<div>
-						<button {...bindTrigger}>click me</button>
-						<button {...bindTextTrigger}>click me</button>
+						<button context-id="btn-1" onClick={click}>
+							click me
+						</button>
+						<button context-id="btn-2" onClick={click}>
+							click me
+						</button>
 					</div>
 					<div>
-						<button {...bindCustomTrigger}>click me</button>
+						<button context-id="btn-3" onClick={click}>
+							click me
+						</button>
 					</div>
 					<div>
-						<button {...bindNumberTrigger}>click me</button>
-						<button {...bindDateTrigger}>click me</button>
+						<button context-id="btn-4" onClick={click}>
+							click me
+						</button>
+						<button context-id="btn-5" onClick={click}>
+							click me
+						</button>
 					</div>
 				</div>
 				<div>
-					{clickedCmd && (
+					{false && (
 						<p>
-							You clicked the <b>{clickedCmd}</b> command!
+							You clicked the <b></b> command!
 						</p>
 					)}
 				</div>
-				<ContextMenu
-					bindMenu={bindMenu}
-					data={data}
-					bindMenuItem={bindMenuItem}
-					coords={coords}
-					setClickedCmd={setClickedCmd}
-					hideMenu={hideMenu}
-				/>
+				<ContextMenu {...contextMenuConfig} />
 			</section>
 		</article>
 	);
