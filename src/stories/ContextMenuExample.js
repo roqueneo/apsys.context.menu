@@ -40,6 +40,10 @@ export const ContextMenuExample = () => {
 		setContextMenuConfig(config);
 	};
 
+	const handleClearFilterOptionClick = () => {
+		console.log(`🚀 ~ ContextMenuExample » onClearFilterOptionClick called`);
+	}
+
 	return (
 		<article>
 			<section>
@@ -74,18 +78,18 @@ export const ContextMenuExample = () => {
 						</p>
 					)}
 				</div>
-				<ContextMenu {...contextMenuConfig} />
+				<ContextMenu {...contextMenuConfig} onClearFilterOptionClick={handleClearFilterOptionClick}/>
 			</section>
 		</article>
 	);
 };
 ContextMenuExample.propTypes = {
-	user: PropTypes.shape({}),
-	onLogin: PropTypes.func.isRequired,
-	onLogout: PropTypes.func.isRequired,
-	onCreateAccount: PropTypes.func.isRequired
+	// user: PropTypes.shape({}),
+	// onLogin: PropTypes.func.isRequired,
+	// onLogout: PropTypes.func.isRequired,
+	// onCreateAccount: PropTypes.func.isRequired
 };
 
 ContextMenuExample.defaultProps = {
-	user: null
+	// user: null
 };
