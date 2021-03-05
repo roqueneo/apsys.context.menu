@@ -3,29 +3,31 @@ import PropTypes from 'prop-types';
 import './contextMenu.css';
 import ContextMenu from '../ContextMenu';
 
+import * as filterTypes from '../constants';
+
 const filtersConfig = {
 	'btn-1': {
 		elementId: 'btn-1',
-		filterType: 'TEXT',
+		filterType: filterTypes.TEXT,
 		filterName: 'Boton 1'
 	},
 	'btn-2': {
 		elementId: 'btn-2',
-		filterType: 'NUMBER',
+		filterType: filterTypes.NUMBER,
 		filterName: 'Boton 2'
 	},
 	'btn-3': {
 		elementId: 'btn-3',
-		filterType: 'DATE',
+		filterType: filterTypes.DATE,
 		filterName: 'Boton 3'
 	},
 	'btn-4': {
 		elementId: 'btn-4',
-		filterType: 'TEXT',
+		filterType: filterTypes.TEXT,
 	},
 	'btn-5': {
 		elementId: 'btn-5',
-		filterType: 'TEXT',
+		filterType: filterTypes.TEXT,
 		filterName: 'Boton 5'
 	}
 };

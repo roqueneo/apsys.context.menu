@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+/** Custom components import section */
+import MenuOption from './components/MenuOption';
+
+/** Resources import section */
 import * as constants from './constants';
 
 /**
@@ -72,8 +77,8 @@ const ContextMenu = (props) => {
 	}
 	return (
 		<div id={`context-menu-${elementId}`}>
-			<div onClick={handleClearFilterOptionClick}>Borrar filtro {filterName && `de ${filterName}`}</div>
-			<div>Filtros de {getFilterDescription(filterType)}</div>
+			<MenuOption onClick={handleClearFilterOptionClick} label={`Borrar filtro ${filterName && `de ${filterName}`}`} />
+			<MenuOption label={`Filtros de ${getFilterDescription(filterType)}`} />
 		</div>
 	);
 };
