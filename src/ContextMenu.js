@@ -4,7 +4,7 @@ import * as constants from './constants';
 
 /**
  * Method to get the description of some filter type.
- * 
+ *
  * @param {string} filterType The value which represents one of the allowed filter types
  */
 const getFilterDescription = (filterType) => {
@@ -54,6 +54,17 @@ const ContextMenu = (props) => {
 	}, [elementId, contextMenuState]);
 
 	/**
+	 * Handle ckick event over clear filter option.
+	 * If onClearFilterOptionClick callback is injected to componenet it is called
+	 */
+	const handleClearFilterOptionClick = () => {
+		setContextMenuState({ open: false });
+		if (onClearFilterOptionClick) {
+			onClearFilterOptionClick();
+		}
+	};
+
+	/**
 	 * Render the content of context menu
 	 */
 	if (!contextMenuState.open) {
@@ -61,7 +72,7 @@ const ContextMenu = (props) => {
 	}
 	return (
 		<div id={`context-menu-${elementId}`}>
-			<div>Borrar filtro {filterName && `de ${filterName}`}</div>
+			<div onClick={handleClearFilterOptionClick}>Borrar filtro {filterName && `de ${filterName}`}</div>
 			<div>Filtros de {getFilterDescription(filterType)}</div>
 		</div>
 	);
