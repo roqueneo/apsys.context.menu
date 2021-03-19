@@ -24,6 +24,16 @@
   color: white;
 }
 
+.App-body {
+  background-color: #282c34;
+  height: calc(100vh - 20px);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
 .App-link {
   color: #61dafb;
 }

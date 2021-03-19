@@ -8,29 +8,104 @@ import * as filterTypes from '../constants';
 const filtersConfig = {
 	'btn-1': {
 		elementId: 'btn-1',
-		filterType: filterTypes.TEXT,
+		filterType: filterTypes.TEXT_FILTER,
 		filterName: 'Boton 1'
 	},
 	'btn-2': {
 		elementId: 'btn-2',
-		filterType: filterTypes.NUMBER,
+		filterType: filterTypes.NUMBER_FILTER,
 		filterName: 'Boton 2'
 	},
 	'btn-3': {
 		elementId: 'btn-3',
-		filterType: filterTypes.DATE,
+		filterType: filterTypes.DATE_FILTER,
 		filterName: 'Boton 3'
 	},
 	'btn-4': {
 		elementId: 'btn-4',
-		filterType: filterTypes.TEXT,
+		filterType: filterTypes.TEXT_FILTER
 	},
 	'btn-5': {
 		elementId: 'btn-5',
-		filterType: filterTypes.TEXT,
+		filterType: filterTypes.TEXT_FILTER,
 		filterName: 'Boton 5'
 	}
 };
+
+const filterOptions = [
+	{
+		id: 'opt01',
+		label: 'Opción a'
+	},
+	{
+		id: 'opt02',
+		label: 'Opción b'
+	},
+	{
+		id: 'opt03',
+		label: 'Opción c'
+	},
+	{
+		id: 'opt04',
+		label: 'Opción d'
+	},
+	{
+		id: 'opt05',
+		label: 'Opción e'
+	},
+	{
+		id: 'opt06',
+		label: 'Opción f'
+	},
+	{
+		id: 'opt07',
+		label: 'Opción g'
+	},
+	{
+		id: 'opt08',
+		label: 'Opción h'
+	},
+	{
+		id: 'opt09',
+		label: 'Opción i'
+	},
+	{
+		id: 'opt10',
+		label: 'Opción 1j'
+	},
+	{
+		id: 'opt11',
+		label: 'Opción 1k'
+	},
+	{
+		id: 'opt12',
+		label: 'Opción 1l'
+	},
+	{
+		id: 'opt13',
+		label: 'Opción 1m'
+	},
+	{
+		id: 'opt14',
+		label: 'Opción 1n'
+	},
+	{
+		id: 'opt15',
+		label: 'Opción 1o'
+	},
+	{
+		id: 'opt16',
+		label: 'Opción 1p'
+	},
+	{
+		id: 'opt17',
+		label: 'Opción 1q'
+	},
+	{
+		id: 'opt18',
+		label: 'Opción 1r'
+	}
+];
 
 export const ContextMenuExample = () => {
 	const [contextMenuConfig, setContextMenuConfig] = useState({ elementId: '' });
@@ -44,7 +119,7 @@ export const ContextMenuExample = () => {
 
 	const handleClearFilterOptionClick = () => {
 		console.log(`🚀 ~ ContextMenuExample » onClearFilterOptionClick called`);
-	}
+	};
 
 	return (
 		<article>
@@ -80,13 +155,18 @@ export const ContextMenuExample = () => {
 						</p>
 					)}
 				</div>
-				<ContextMenu {...contextMenuConfig} onClearFilterOptionClick={handleClearFilterOptionClick}/>
+				<ContextMenu
+					{...contextMenuConfig}
+					onClearFilterOptionClick={handleClearFilterOptionClick}
+					filterOptions={{ serverSide: false, items: filterOptions }}
+				/>
 			</section>
 		</article>
 	);
 };
+
 ContextMenuExample.propTypes = {
-	// user: PropTypes.shape({}),
+	//filterOptions: PropTypes.shape({}),
 	// onLogin: PropTypes.func.isRequired,
 	// onLogout: PropTypes.func.isRequired,
 	// onCreateAccount: PropTypes.func.isRequired
