@@ -117,16 +117,17 @@ function App() {
 		setContextMenuConfig(config);
 	};
 
-	const handleClearFilterOptionClick = () => {
-		console.log(`🚀 ~ ContextMenuExample » onClearFilterOptionClick called`);
+	const handleApplyFilterClick = (selectedItems) => {
+		console.log(`🚀 ~ file: App.js ~ line 121 ~ handleApplyFilterClick ~ selectedItems »`, selectedItems);
+	};
+
+	const handleClearFilterClick = () => {
+		console.log(`🚀 ~ ContextMenuExample » onClearFilterOptionClick » called`);
 	};
 
 	return (
 		<div className="App">
-			{/* <header className="App-header">
-				<span>Menu context example</span>
-			</header> */}
-			<body className="App-body">
+			<div className="App-body">
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<button context-id="btn-1" onClick={click}>
 						click me
@@ -150,10 +151,11 @@ function App() {
 				</div>
 				<ContextMenu
 					{...contextMenuConfig}
-					onClearFilterOptionClick={handleClearFilterOptionClick}
+					onApplyFilterClick={handleApplyFilterClick}
+					onClearFilterClick={handleClearFilterClick}
 					filterOptions={{ serverSide: false, items: filterOptions }}
 				/>
-			</body>
+			</div>
 		</div>
 	);
 }
