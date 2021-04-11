@@ -27,7 +27,24 @@ const getFilterDescription = (filterType) => {
 	}
 };
 
-const ContextMenu = (props) => {
+const convertArrayToObject = (inputArray) => {
+	const outputObject = {};
+	inputArray.forEach((item) => {
+		outputObject[item.id] = { ...item, selected: false };
+	});
+	return outputObject;
+};
+
+const filterItems = (itemsObject, query) => {
+	if (!query || query.length === 0) return itemsObject;
+	const queryStr = query.toLowerCase();
+	const filteredItems = Object.values(itemsObject).filter((item) => {
+		return item.label && item.label.toLowerCase().includes(queryStr);
+	});
+	return convertArrayToObject(filteredItems);
+};
+
+const ContextMenuFilter = (props) => {
 	/** Destructuring properties */
 	const {
 		elementId,
@@ -42,8 +59,8 @@ const ContextMenu = (props) => {
 	const [contextMenuState, setContextMenuState] = useState({ opened: false, elementId: null, anchorEl: null });
 	const [opened, setOpened] = useState(false);
 	// const [anchorEl, setAnchorEl] = useState(null);
-	const [visibleFilterItems, setVisibleFilterItems] = useState({});
-	// console.log(`🚀 ~ file: ContextMenu.js ~ line 45 ~ ContextMenu ~ visibleFilterItems`, visibleFilterItems);
+	const [allItems, setAllItems] = useState({});
+	const [query, setQuery] = useState('');
 
 	const hideMenu = useCallback(() => setOpened(false), [setOpened]);
 
@@ -53,16 +70,15 @@ const ContextMenu = (props) => {
 	useEffect(() => {
 		const nodes = document.querySelectorAll(`[context-id = "${elementId}"]`);
 
-		const handleOutsideClick = (e) => {
-			// if (!menuRef.current.contains(e.target)) {
-			// 	setSelectedIndex(-1);
+		const handleOutsideClick = (event) => {
+			// const contextId = event.target.getAttribute('context-id');
+			// if (!contextId) {
 			// 	hideMenu();
 			// }
 		};
 
 		if (nodes.length > 0) {
 			const anchorEl = nodes[0];
-			// console.log(`🚀 ~ file: ContextMenu.js ~ line 63 ~ useEffect ~ anchorEl`, anchorEl);
 
 			const openMenu = () => {
 				setOpened(true);
@@ -107,11 +123,9 @@ const ContextMenu = (props) => {
 
 	useEffect(() => {
 		if (items && items.length > 0) {
-			const initialVisibleItems = {};
-			items.forEach((item) => {
-				initialVisibleItems[item.id] = { ...item, selected: false };
-			});
-			setVisibleFilterItems(initialVisibleItems);
+			const mappedItems = items.map((item) => ({ ...item, selected: false }));
+			const initialVisibleItems = convertArrayToObject(mappedItems);
+			setAllItems(initialVisibleItems);
 		}
 	}, [items]);
 
@@ -127,8 +141,7 @@ const ContextMenu = (props) => {
 		items.forEach((item) => {
 			initialVisibleItems[item.id] = { ...item, selected: false };
 		});
-		setVisibleFilterItems(initialVisibleItems);
-
+		setAllItems(initialVisibleItems);
 	};
 
 	/**
@@ -137,10 +150,10 @@ const ContextMenu = (props) => {
 	 */
 	const updateSelectedItems = (event) => {
 		const optionId = event.currentTarget.getAttribute('data-id');
-		if (visibleFilterItems[optionId]) {
-			const item = visibleFilterItems[optionId];
+		if (allItems[optionId]) {
+			const item = allItems[optionId];
 			const newValue = !item.selected;
-			setVisibleFilterItems((prevState) => ({ ...prevState, [optionId]: { ...item, selected: newValue } }));
+			setAllItems((prevState) => ({ ...prevState, [optionId]: { ...item, selected: newValue } }));
 		}
 	};
 
@@ -148,11 +161,16 @@ const ContextMenu = (props) => {
 	 * Handle the click on apply button
 	 */
 	const handleApplyFilterClick = () => {
-		const selectedItems = Object.values(visibleFilterItems)
+		const selectedItems = Object.values(allItems)
 			.filter(({ selected }) => selected)
 			.map(({ id, label }) => ({ id, label }));
 		onApplyFilterClick(selectedItems);
 		setOpened(false);
+	};
+
+	const handleQueryChange = (event) => {
+		const { value } = event.target;
+		setQuery(value);
 	};
 
 	/**
@@ -162,11 +180,13 @@ const ContextMenu = (props) => {
 		return null;
 	}
 
+	const visibleItems = filterItems(allItems, query);
+
 	return (
 		<div id={`context-menu-${elementId}`} style={{ border: '1px solid blue' }}>
 			<MenuOption onClick={handleClearFilterClick} label={`Borrar filtro ${filterName && `de ${filterName}`}`} />
 			<MenuOption label={`Filtros de ${getFilterDescription(filterType)}`} />
-			<FilterItems items={visibleFilterItems} onFilterOptionClick={updateSelectedItems} />
+			<FilterItems items={visibleItems} onQueryChange={handleQueryChange} onFilterOptionClick={updateSelectedItems} />
 			<div style={{ border: '1px solid gray' }} />
 			<div style={{ textAlign: 'right', padding: '2px 10px 4px 10px', backgroundColor: 'lightgrey' }}>
 				<button onClick={handleApplyFilterClick}>Aplicar</button>
@@ -175,7 +195,7 @@ const ContextMenu = (props) => {
 	);
 };
 
-ContextMenu.propTypes = {
+ContextMenuFilter.propTypes = {
 	elementId: PropTypes.string.isRequired,
 	filterType: PropTypes.oneOf([constants.TEXT_FILTER, constants.NUMBER_FILTER, constants.DATE_FILTER]),
 	filterName: PropTypes.string,
@@ -193,9 +213,9 @@ ContextMenu.propTypes = {
 	})
 };
 
-ContextMenu.defaultProps = {
+ContextMenuFilter.defaultProps = {
 	filterType: constants.TEXT_FILTER,
 	onApplyFilterClick: () => console.warn('[onApplyFilterClick] not defined!')
 };
 
-export default ContextMenu;
+export default ContextMenuFilter;

@@ -1,25 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import OptionSearcher from './OptionSearcher';
+import FilterItem from './FilterItem';
 
 const FilterItems = (props) => {
-	const { items, onFilterOptionClick } = props;
-
-	const renderItem = ({ id, label, selected }) => {
-		return (
-			<div
-				key={id}
-				style={{ padding: '2px 10px', backgroundColor: 'lightgrey' }}
-				data-id={id}
-				onClick={onFilterOptionClick}
-			>
-				<div style={{ textAlign: 'left', cursor: 'pointer' }}>
-					<input type="checkbox" checked={selected} readOnly/>
-					<span style={{ display: 'inline-block', width: '5px' }} />
-					<span>{label}</span>
-				</div>
-			</div>
-		);
-	};
+	const { items, onQueryChange, onFilterOptionClick } = props;
 
 	if (items.length === 0) {
 		return null;
@@ -27,10 +12,14 @@ const FilterItems = (props) => {
 	return (
 		<div>
 			<div style={{ border: '1px solid gray' }} />
-			<div style={{ padding: '2px 10px', backgroundColor: 'lightgrey' }}>Searcher</div>
+			<div style={{ padding: '2px 10px', backgroundColor: 'lightgrey' }}>
+				<OptionSearcher onChange={onQueryChange} />
+			</div>
 			<div style={{ border: '1px solid gray' }} />
 			<div style={{ maxHeight: '210px', overflowY: 'auto' }}>
-				{Object.values(items).map((item) => renderItem(item))}
+				{Object.values(items).map((item) => (
+					<FilterItem key={item.id} {...item} onClick={onFilterOptionClick} />
+				))}
 			</div>
 		</div>
 	);
@@ -38,6 +27,7 @@ const FilterItems = (props) => {
 
 FilterItems.propTypes = {
 	items: PropTypes.object.isRequired,
+	onQueryChange: PropTypes.func,
 	onFilterOptionClick: PropTypes.func
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ContextMenu from './ContextMenu';
+import ContextMenu from './ContextMenuFilter';
 import './App.css';
 
 import * as filterTypes from './constants';
@@ -108,7 +108,10 @@ const filterOptions = [
 ];
 
 function App() {
-	const [contextMenuConfig, setContextMenuConfig] = useState({ elementId: '' });
+	const [contextMenuConfig, setContextMenuConfig] = useState({
+		elementId: '',
+		filterOptions: { serverSide: false, items: [] }
+	});
 
 	const click = (event) => {
 		const { target } = event;
@@ -118,7 +121,8 @@ function App() {
 	};
 
 	const handleApplyFilterClick = (selectedItems) => {
-		console.log(`🚀 ~ file: App.js ~ line 121 ~ handleApplyFilterClick ~ selectedItems »`, selectedItems);
+		const selectedOptionsStr = selectedItems.map((opt) => opt.label).join('|');
+		alert(selectedOptionsStr);
 	};
 
 	const handleClearFilterClick = () => {
@@ -130,23 +134,23 @@ function App() {
 			<div className="App-body">
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<button context-id="btn-1" onClick={click}>
-						click me
+						Click me
 					</button>
 					<button context-id="btn-2" onClick={click}>
-						click me
+						Click me
 					</button>
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<button context-id="btn-3" onClick={click}>
-						click me
+						Click me
 					</button>
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<button context-id="btn-4" onClick={click}>
-						click me
+						Click me
 					</button>
 					<button context-id="btn-5" onClick={click}>
-						click me
+						Click me
 					</button>
 				</div>
 				<ContextMenu
